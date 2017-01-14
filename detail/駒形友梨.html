@@ -1,0 +1,293 @@
+<!doctype html>
+<!--
+  Material Design Lite
+  Copyright 2015 Google Inc. All rights reserved.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      https://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License
+-->
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="A front-end template that helps you build fast, modern mobile web apps.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <title>駒形友梨 - Lisiograph</title>
+
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="192x192" href="../images/favicon.jpg">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="駒形友梨 - Lisiograph">
+    <link rel="apple-touch-icon-precomposed" href="../images/favicon.jpg">
+
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="../images/favicon.jpg">
+    <meta name="msapplication-TileColor" content="#3372DF">
+
+    <link rel="shortcut icon" href="../images/favicon.jpg">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.cyan-light_blue.min.css">
+    <link rel="stylesheet" href="../assets/css/styles.css">
+
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+
+    <!--start google chart-->
+		    <script type="text/javascript" src="//www.google.com/jsapi"></script>
+		    <script type="text/javascript">
+		      google.load('visualization', '1.1', {packages: ['corechart', 'controls']});
+		    </script>
+		    <script type="text/javascript">
+		      function drawVisualization() {
+		      $.when(
+          $.getJSON("https://spreadsheets.google.com/feeds/list/10vPr3i1L7Z5vr8_YfH9IXcgIs4Dp28HTuSjL6nhgpfo/1/public/values?alt=json")
+
+		      )
+		    .done(
+		        function(json) {
+		            var graphArr = [];
+		            for(var i=1; i<=Object.keys(json.feed.entry).length-1; i++) {
+		                //console.log(Object.keys(json.feed.entry).length)
+		                var result1 = json.feed.entry[i].gsx$_cn6ca.$t;
+		                //var result1 = result1.split('/');
+		                // スラッシュで区切って配列にする
+		                var result1_year = result1.slice(0,4);
+		                //配列の先頭を数値変換して年にする
+		                var result1_month = '0' + Number(result1.slice(4,6))-1;
+		                //配列の2つ目を数値変換して1を引いて月にする
+		                var result1_day = result1.slice(6);
+		                //配列の3つ目を数値変換して日にする
+		                var result2 = json.feed.entry[i].gsx$_cokwr.$t;
+		                var result3 = json.feed.entry[i].gsx$_cpzh4.$t;
+		                var result4 = json.feed.entry[i].gsx$_cre1l.$t;
+		                var result5 = json.feed.entry[i].gsx$_chk2m.$t;
+		                var jsonArr = [new Date(result1_year,result1_month,Number(result1_day)),Number(result2),Number(result3),Number(result4),Number(result5)]
+		                graphArr.push(jsonArr);
+		            }
+		            //console.log(graphArr);
+		            //console.log(graphArr[1203]);
+		            var dashboard = new google.visualization.Dashboard(
+		             document.getElementById('dashboard'));
+		            //
+		            var today = new Date();
+		            var today_year = today.getFullYear();
+		            var today_month = today.getMonth();
+		            var today_day = today.getDate();
+		            var initial_date = new Date( today.getTime() - 90*24*60*60*1000 );
+		            var initial_year = initial_date.getFullYear();
+		            var initial_month = initial_date.getMonth();
+		            var initial_day = initial_date.getDate();
+		            //
+		         var control = new google.visualization.ControlWrapper({
+		           'controlType': 'ChartRangeFilter',
+		           'containerId': 'control',
+		           'options': {
+		             // Filter by the date axis.
+		             'filterColumnIndex': 0,
+		             'ui': {
+		               'chartType': 'LineChart',
+		               'chartOptions': {
+		                 'chartArea': {'width': '90%'},
+		                 'hAxis': {'baselineColor': 'none'}
+		               },
+		               // Display a single series that shows the closing value of the stock.
+		               // Thus, this view has two columns: the date (axis) and the stock value (line series).
+		               'chartView': {
+		                 'columns': [0, 3]
+		               },
+		               // 1 day in milliseconds = 24 * 60 * 60 * 1000 = 86,400,000
+		               'minRangeSize': 86400000
+		             }
+		           },
+		           // Initial range:
+		           'state': {'range': {'start': new Date(initial_year, initial_month, initial_day), 'end': new Date(today_year, today_month, today_day)}}
+		         });
+
+		         var chart = new google.visualization.ChartWrapper({
+		           'chartType': 'ComboChart',
+		           'containerId': 'chart',
+		           'options': {
+		             // Use the same chart area width as the control for axis alignment.
+		             'chartArea': {'height': '80%', 'width': '90%'},
+		             'hAxis': {'slantedText': false},
+		             'vAxis': {'viewWindow': {'min': 0, 'max': 'auto'}},
+		             seriesType: "bars",
+		             series : {1: {type: "line"},2: {type: "line"},3: {type: "line"}},
+		             'legend': {'position': 'none'}
+		           },
+		           // Convert the first column from 'date' to 'string'.
+		           'view': {
+		             'columns': [
+		               {
+		                 'calc': function(dataTable, rowIndex) {
+		                   return dataTable.getFormattedValue(rowIndex, 0);
+		                 },
+		                 'type': 'string'
+		               }, 1, 2, 3, 4]
+		           }
+		         });
+
+		          var data = new google.visualization.DataTable();
+		          data.addColumn('date', 'Date');
+		          data.addColumn('number', 'PageView');
+		          data.addColumn('number', '5-day SMA');
+		          data.addColumn('number', '25-day SMA');
+		          data.addColumn('number', '75-day SMA');
+		          data.addRows(graphArr);
+		          dashboard.bind(control, chart);
+		          dashboard.draw(data);
+		      });
+		      }
+		      google.setOnLoadCallback(drawVisualization);
+		    </script>
+
+        <!--start read spreadsheet-->
+    		<script>
+    		$(function(){
+              $.getJSON("https://spreadsheets.google.com/feeds/list/10vPr3i1L7Z5vr8_YfH9IXcgIs4Dp28HTuSjL6nhgpfo/2/public/values?alt=json", function(json){
+                $(".name").append(json.feed.title.$t);
+                $(".twpro_value").append('twpro検索数: ' + json.feed.entry[0].gsx$_cokwr.$t);
+                $(".nico_value").append('タグ「' + json.feed.title.$t + '」' + 'が付けられた動画: ' + json.feed.entry[1].gsx$_cokwr.$t + '件');
+                $(".value").append(json.feed.entry[2].gsx$_cokwr.$t);
+                var change_value = json.feed.entry[4].gsx$_cn6ca.$t.toString()
+                if(change_value == 0){
+                  $(".card-bg-Dtl").addClass("even");
+                  $(".change_lead").append('前週比').addClass("even");
+                  $(".change1").append('±' + json.feed.entry[4].gsx$_cn6ca.$t).addClass("even");
+                  $(".change2").append('(' +　'±' +  json.feed.entry[4].gsx$_cokwr.$t + ')').addClass("even");
+                }
+                else{
+                  if(change_value.indexOf('-') !== -1){
+                  $(".card-bg-Dtl").addClass("down");
+                  $(".change_lead").append('前週比').addClass("down");
+                  $(".change1").append(json.feed.entry[4].gsx$_cn6ca.$t).addClass("down");
+                  $(".change2").append('(' + json.feed.entry[4].gsx$_cokwr.$t + ')').addClass("down");
+                  }
+                  else{
+                  $(".card-bg-Dtl").addClass("up");
+                  $(".change_lead").append('前週比').addClass("up");
+                  $(".change1").append('+' + json.feed.entry[4].gsx$_cn6ca.$t).addClass("up");
+                  $(".change2").append('(' +　'+' +  json.feed.entry[4].gsx$_cokwr.$t + ')').addClass("up");
+                  }
+                }
+    			});
+    		});
+    		</script>
+
+        <!--start Datatables-->
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script type="text/javascript" charset="utf8" src="../assets/js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" charset="utf-8">
+                $(document).ready(function() {
+                    $('#myTable').dataTable( {
+                    	"paging": false,
+                      "info":false,
+                      "asStripeClasses": [''],
+                        "bServerSide":false,
+                        "bProcessing":true,
+                        "sAjaxDataProp": "feed.entry",
+                        "sAjaxSource": "https://spreadsheets.google.com/feeds/list/18Z54jEKJIgOjQyPFzCjLzZFXExI02F7ysR7V-dKz6X4/2/public/values?alt=json",
+                        "aoColumns": [
+                            { "mDataProp": "gsx$_cn6ca.$t" },
+                            //A列
+                                    ]
+                    } );
+                } );
+            </script>
+        <link rel="stylesheet" href="../dataTable2.css">
+        <!--end Datatables-->
+
+
+  </head>
+  <body>
+    <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
+      <header class="demo-header mdl-layout__header mdl-color--grey-100 mdl-color-text--grey-600">
+        <div class="mdl-layout__header-row">
+          <span class="mdl-layout-title"><h9><div class="col-md-4 name"></div></<h9></span>
+          <div class="mdl-layout-spacer"></div>
+        </div>
+      </header>
+      <div class="demo-drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
+        <header class="demo-drawer-header">
+          <div class="demo-avatar-dropdown">
+            <span><a href="http://lisiograph.webcrow.jp/">Lisiograph</a></span>
+            <div class="mdl-layout-spacer"></div>
+          </div>
+        </header>
+
+        <nav class="demo-navigation mdl-navigation mdl-color--blue-grey-800">
+          <!--start table-->
+            <table id="myTable" class="display text-right"></table>
+          <!--end table-->
+          <div class="mdl-layout-spacer"></div>
+        </nav>
+      </div>
+      <main class="mdl-layout__content mdl-color--grey-100">
+        <div class="mdl-grid demo-content">
+          <div class="demo-options card-bg-Dtl mdl-shadow--2dp card-bg mdl-cell mdl-cell--12-col mdl-grid">
+            <div class="Dtl mdl-cell--12-col">
+            	<div class="row text-center">
+            		<div class="mdl-cell--6-col value">Wikipedia PV : </div>
+            		<div class="mdl-cell--2-col change change_lead"></div>
+            		<div class="mdl-cell--2-col change change1"></div>
+            		<div class="mdl-cell--2-col change change2"></div>
+            	</div>
+            </div>
+          </div>
+          <div class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
+            	<div id="dashboard" class='mdl-cell--12-col'>
+            		<div id="chart" style='height: 400px;'></div>
+            		<div id="control" style='width: 99%; height: 80px;'></div>
+            	</div>
+            </div>
+          <div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col">
+            <h3>Google Trends</h3>
+            <iframe style="height: 350px;" src="https://www.google.com/trends/fetchComponent?q=駒形友梨&date=today 24-m&&geo=JP&cid=TIMESERIES_GRAPH_0&export=5" frameborder="0"></iframe>
+          </div>
+          <div class="demo-cards mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-grid mdl-grid--no-spacing">
+            <div class="demo-options mdl-card mdl-color--blue-500 mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--3-col-tablet mdl-cell--12-col-desktop">
+              <div class="mdl-card__supporting-text mdl-color-text--blue-grey-50">
+                <h2>twpro</h2>
+                <ul>
+                  <li>
+                      <span><h4><div class='twpro_value'></div></h4></span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="demo-separator mdl-cell--1-col"></div>
+            <div class="demo-options mdl-card mdl-color--blue-grey-500 mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--3-col-tablet mdl-cell--12-col-desktop">
+              <div class="mdl-card__supporting-text mdl-color-text--blue-grey-50">
+                <h2>ニコニコ動画</h2>
+                <ul>
+                  <li>
+                      <span><h4><div class='nico_value'></div></h4></span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="demo-separator mdl-cell--1-col"></div>
+          </div>
+        </div>
+      </main>
+    </div>
+    <script src="https://code.getmdl.io/1.1.3/material.min.js"></script>
+  </body>
+</html>
