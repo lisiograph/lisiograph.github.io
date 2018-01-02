@@ -269,4 +269,8 @@ _:-ms-input-placeholder, :root .demo-graph {
 .down {background-color:#FF6464;color:white;float:left;}
 .even {background-color:#696969;color:white;float:left;}
 
+/** GoogleTrendsの変更に対応　**/
+iframe {width: 95%;height: 350px;}
+/** GoogleTrendsの変更に対応　**/
+
 /** ここまで追記　**/
