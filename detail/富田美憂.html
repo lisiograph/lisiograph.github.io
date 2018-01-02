@@ -259,7 +259,10 @@
             </div>
           <div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col">
             <h3>Google Trends</h3>
-            <iframe style="height: 350px;" src="https://www.google.com/trends/fetchComponent?q=富田美憂&date=today 24-m&&geo=JP&cid=TIMESERIES_GRAPH_0&export=5" frameborder="0"></iframe>
+            <script type="text/javascript" src="https://ssl.gstatic.com/trends_nrtr/1243_RC12/embed_loader.js"></script>
+            <script type="text/javascript">
+              trends.embed.renderExploreWidget("TIMESERIES", {"comparisonItem":[{"keyword":"富田美憂","geo":"","time":"today 12-m"}],"category":0,"property":""}, {"exploreQuery":"q=%E5%AF%8C%E7%94%B0%E7%BE%8E%E6%86%82&date=today 12-m","guestPath":"https://trends.google.co.jp:443/trends/embed/"});
+            </script>          
           </div>
           <div class="demo-cards mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-grid mdl-grid--no-spacing">
             <div class="demo-options mdl-card mdl-color--blue-500 mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--3-col-tablet mdl-cell--12-col-desktop">
