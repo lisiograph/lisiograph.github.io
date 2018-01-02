@@ -1,0 +1,147 @@
+<!doctype html>
+<!--
+  Material Design Lite
+  Copyright 2015 Google Inc. All rights reserved.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      https://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License
+-->
+
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Lisiographです。数字を並べて楽しんでいます。">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <title>Lisiograph</title>
+
+    <!-- Page styles -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.min.css">
+    <link rel="stylesheet" href="styles_index.css">
+
+    <!--start Datatables-->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="assets/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" charset="utf-8">
+            $(document).ready(function() {
+                $('#myTable').dataTable( {
+                	"paging": false,
+                    "bServerSide":false,
+                    "bProcessing":true,
+                    "sAjaxDataProp": "feed.entry",
+                    "sAjaxSource": "https://spreadsheets.google.com/feeds/list/18Z54jEKJIgOjQyPFzCjLzZFXExI02F7ysR7V-dKz6X4/2/public/values?alt=json",
+                    "aoColumns": [
+                        { sTitle : "名称","mDataProp": "gsx$_cn6ca.$t" },
+                        //A列
+                        { sTitle : "WikipediaPV","mDataProp": "gsx$_cokwr.$t" },
+                        //B列
+                        { sTitle : "騰落率（前週比）","mDataProp": "gsx$_cre1l.$t" },
+                        //D列
+                        { sTitle : "twpro","mDataProp": "gsx$_chk2m.$t" },
+                        //E列
+                        { sTitle : "ニコニコ動画 タグ","mDataProp": "gsx$_ciyn3.$t" },
+                        //F列
+                                ]
+                } );
+            } );
+        </script>
+    <link rel="stylesheet" href="dataTable.css">
+    <!--end Datatables-->
+  </head>
+  <body>
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+
+      <div class="lisiograph-header mdl-layout__header mdl-layout__header--waterfall">
+        <div class="mdl-layout__header-row">
+          <span class="lisiograph-title mdl-layout-title">
+            <img class="lisiograph-logo-image" src="images/lisiograph-logo.png">Lisiogrpah
+          </span>
+          <!-- Add spacer, to align navigation to the right in desktop -->
+          <div class="lisiograph-header-spacer mdl-layout-spacer"></div>
+          <!-- Navigation -->
+          <div class="lisiograph-navigation-container">
+          </div>
+          <span class="lisiograph-mobile-title mdl-layout-title">
+            <img class="lisiograph-logo-image" src="images/lisiograph-logo.png">
+          </span>
+        </div>
+      </div>
+      <div class="lisiograph-content mdl-layout__content">
+        <a name="top"></a>
+        <div class="lisiograph-be-together-section mdl-typography--text-center">
+          <div class="logo-font lisiograph-slogan">ようこそ</div>
+          <div class="logo-font lisiograph-sub-slogan">ここにあるのは、意味のない数字です。</div>
+        </div>
+        <div class="lisiograph-customized-section">
+          <div class="lisiograph-customized-section-text">
+            <div class="mdl-typography--font-light mdl-typography--display-1-color-contrast"></div>
+            <!--start table-->
+  						<table id="myTable" class="display text-right"></table>
+  					<!--end table-->
+          </div>
+        </div>
+        <div class="lisiograph-customized-section">
+          <div class="lisiograph-customized-section-text">
+            <div class="mdl-typography--font-light mdl-typography--display-1-color-contrast">調べる</div>
+            <p class="mdl-typography--font-light">
+              それは、その人のことを知りたいとき。
+            </p>
+          </div>
+          <div class="lisiograph-wikipedia-section-image"></div>
+        </div>
+        <div class="lisiograph-customized-section">
+          <div class="lisiograph-customized-section-text">
+            <div class="mdl-typography--font-light mdl-typography--display-1-color-contrast">プロフィールに書く</div>
+            <p class="mdl-typography--font-light">
+              そのクラスタにあることの証明。
+            </p>
+          </div>
+          <div class="lisiograph-twpro-section-image"></div>
+        </div>
+        <div class="lisiograph-customized-section">
+          <div class="lisiograph-customized-section-text">
+            <div class="mdl-typography--font-light mdl-typography--display-1-color-contrast">動画が増える</div>
+            <p class="mdl-typography--font-light">
+              アニメ、ラジオ、歌、MAD。</br>
+              公式配信でも、そうじゃなくても、実績が動画になる。
+            </p>
+          </div>
+          <div class="lisiograph-nicovideo-section-image"></div>
+        </div>
+        <footer class="lisiograph-footer mdl-mega-footer">
+          <div class="mdl-mega-footer--top-section">
+            <div class="mdl-mega-footer--left-section">
+            </div>
+            <div class="mdl-mega-footer--right-section">
+              <a class="mdl-typography--font-light" href="#top">
+                Back to Top
+                <i class="material-icons">expand_less</i>
+              </a>
+            </div>
+          </div>
+
+          <div class="mdl-mega-footer--middle-section">
+            <p class="mdl-typography--font-light">Author: Lisiograph(2017)</p>
+          </div>
+
+          <div class="mdl-mega-footer--bottom-section">
+          </div>
+
+        </footer>
+      </div>
+    </div>
+    <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+  </body>
+</html>
