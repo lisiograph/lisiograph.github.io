@@ -165,7 +165,7 @@
                 $(".twpro_value").append('twpro検索数: ' + json.feed.entry[0].gsx$_cokwr.$t);
                 $(".nico_value").append('タグ「' + json.feed.title.$t + '」' + 'が付けられた動画: ' + json.feed.entry[1].gsx$_cokwr.$t + '件');
                 $(".value").append(json.feed.entry[2].gsx$_cokwr.$t);
-                var change_value = json.feed.entry[1].gsx$_cn6ca.$t.toString()
+                var change_value = json.feed.entry[4].gsx$_cn6ca.$t.toString()
                 if(change_value == 0){
                   $(".card-bg-Dtl").addClass("even");
                   $(".change_lead").append('前週比').addClass("even");
